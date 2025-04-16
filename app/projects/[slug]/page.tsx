@@ -1,17 +1,28 @@
 import { fetchProjectBySlug } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import type { Metadata } from "next"; // Import Metadata type
 
-// Define props type including params
-type ProjectDetailPageProps = {
-  params: {
-    slug: string;
-  };
-};
+// Define the expected Promise types based on Next.js 15
+type ParamsPromise = Promise<{ slug: string }>;
+type SearchParamsPromise = Promise<{
+  [key: string]: string | string[] | undefined;
+}>;
 
 // Optional: Generate dynamic metadata for the page title
-export async function generateMetadata({ params }: ProjectDetailPageProps) {
-  const project = await fetchProjectBySlug(params.slug);
+export async function generateMetadata({
+  params,
+}: {
+  params: ParamsPromise;
+  searchParams: SearchParamsPromise; // Keep structure consistent
+}): Promise<Metadata> {
+  const resolvedParams = await params; // Await the promise
+  const slug = resolvedParams.slug;
+
+  if (!slug) {
+    return { title: "Project Not Found" };
+  }
+  const project = await fetchProjectBySlug(slug);
   if (!project) {
     return {
       title: "Project Not Found",
@@ -22,9 +33,15 @@ export async function generateMetadata({ params }: ProjectDetailPageProps) {
   };
 }
 
-export default async function ProjectDetailPage({
-  params,
-}: ProjectDetailPageProps) {
+// Restore original async function definition
+export default async function ProjectDetailPage(props: {
+  params: ParamsPromise;
+  searchParams: SearchParamsPromise;
+}) {
+  const params = await props.params; // Await the promise
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _searchParams = await props.searchParams; // Await even if unused for consistency
+
   const { slug } = params;
   const project = await fetchProjectBySlug(slug);
 

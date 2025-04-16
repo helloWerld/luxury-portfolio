@@ -184,8 +184,8 @@ export default function AboutPage() {
             </p>
             <ul className="list-disc list-inside space-y-1 text-foreground/80">
               <li>
-                Developed and maintained features for Nordstrom's e-commerce
-                platform.
+                Developed and maintained features for Nordstrom&apos;s
+                e-commerce platform.
               </li>
               <li>
                 Gained experience with large-scale retail systems and agile
