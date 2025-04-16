@@ -10,7 +10,7 @@ export default function HomePage() {
         <div className="flex flex-col justify-center items-center md:items-start text-center md:text-left p-8 md:p-12 lg:p-16">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-serif mb-6">
             {/* TODO: Replace with compelling headline */}
-            Crafting Exceptional Digital Experiences
+            Crafting Exceptional Digital Experiences.
           </h1>
           <p className="text-lg md:text-xl text-foreground/80 max-w-xl mx-auto md:mx-0 mb-8">
             {/* TODO: Replace with brief description */}
