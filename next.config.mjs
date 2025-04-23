@@ -12,6 +12,11 @@ const nextConfig = {
         protocol: "https",
         hostname: "picsum.photos",
       },
+      {
+        protocol: "https",
+        hostname: "evkowwcdiojsljljtyke.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
       // TODO: Add hostnames for your actual project image storage later (e.g., Supabase storage bucket)
     ],
   },

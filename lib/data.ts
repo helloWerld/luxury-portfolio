@@ -23,7 +23,12 @@ export type ProjectDetails = {
   tech_stack: string[] | null;
   role: string | null;
   outcomes: string | null;
+  github_url: string | null;
+  live_url: string | null;
 };
+
+// Type for creating/updating projects
+export type ProjectInput = Omit<ProjectDetails, "id" | "created_at">;
 
 /**
  * Fetches projects for the grid display.
@@ -86,4 +91,158 @@ export async function fetchProjectBySlug(
 
   console.log(`Fetched details for project: ${data.title}`);
   return data;
+}
+
+/**
+ * Creates a new project in the database.
+ */
+export async function createProject(
+  project: ProjectInput
+): Promise<ProjectDetails> {
+  console.log("Creating new project:", project.title);
+
+  // Generate a slug from the title if not provided
+  const slug = project.slug || project.title.toLowerCase().replace(/\s+/g, "-");
+
+  const { data, error } = await supabase
+    .from("projects")
+    .insert([{ ...project, slug }])
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Error creating project:", error);
+    throw new Error(`Failed to create project: ${error.message}`);
+  }
+
+  console.log("Created project:", data.title);
+  return data;
+}
+
+/**
+ * Updates an existing project in the database.
+ */
+export async function updateProject(
+  id: number,
+  project: Partial<ProjectInput>
+): Promise<ProjectDetails> {
+  console.log(`Updating project ${id}:`, project);
+
+  const { data, error } = await supabase
+    .from("projects")
+    .update(project)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Error updating project:", error);
+    throw new Error(`Failed to update project: ${error.message}`);
+  }
+
+  console.log("Updated project:", data.title);
+  return data;
+}
+
+/**
+ * Deletes a project from the database.
+ */
+export async function deleteProject(id: number): Promise<void> {
+  console.log("Deleting project:", id);
+
+  const { error } = await supabase.from("projects").delete().eq("id", id);
+
+  if (error) {
+    console.error("Error deleting project:", error);
+    throw new Error(`Failed to delete project: ${error.message}`);
+  }
+
+  console.log("Project deleted successfully");
+}
+
+/**
+ * Fetches all projects for admin view (includes all fields).
+ */
+export async function fetchProjectsForAdmin(): Promise<ProjectDetails[]> {
+  console.log("Fetching all projects for admin...");
+
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching projects for admin:", error);
+    throw new Error(`Failed to fetch projects: ${error.message}`);
+  }
+
+  console.log(`Fetched ${data?.length || 0} projects for admin.`);
+  return data || [];
+}
+
+/**
+ * Uploads an image to Supabase Storage and returns the public URL.
+ */
+export async function uploadProjectImage(
+  file: File,
+  path?: string
+): Promise<string> {
+  if (!file) throw new Error("No file provided");
+
+  // Validate file type
+  if (!file.type.startsWith("image/")) {
+    throw new Error("File must be an image");
+  }
+
+  // Generate a unique file path if none provided
+  const filePath =
+    path ||
+    `${crypto.randomUUID()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, "")}`;
+  console.log(`Uploading image: ${filePath}`);
+
+  const { data, error } = await supabase.storage
+    .from("project-images")
+    .upload(filePath, file, {
+      cacheControl: "3600",
+      upsert: true, // Allow overwriting files
+    });
+
+  if (error) {
+    console.error("Error uploading image:", error);
+    throw new Error(`Failed to upload image: ${error.message}`);
+  }
+
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from("project-images").getPublicUrl(data.path);
+
+  console.log("Image uploaded successfully:", publicUrl);
+  return publicUrl;
+}
+
+/**
+ * Deletes an image from Supabase Storage.
+ * @param url The public URL of the image to delete
+ */
+export async function deleteProjectImage(url: string): Promise<void> {
+  // Extract the file path from the URL
+  const urlObj = new URL(url);
+  const pathMatch = urlObj.pathname.match(/project-images\/(.+)$/);
+  if (!pathMatch) {
+    throw new Error("Invalid image URL");
+  }
+
+  const filePath = pathMatch[1];
+  console.log(`Deleting image: ${filePath}`);
+
+  const { error } = await supabase.storage
+    .from("project-images")
+    .remove([filePath]);
+
+  if (error) {
+    console.error("Error deleting image:", error);
+    throw new Error(`Failed to delete image: ${error.message}`);
+  }
+
+  console.log("Image deleted successfully");
 }

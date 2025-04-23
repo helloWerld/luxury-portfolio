@@ -60,9 +60,10 @@ export default function ContactPage() {
                 className="w-full px-3 py-2 border border-secondary/30 rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50"
               ></textarea>
             </div>
+            {/* Submit Button */}
             <button
               type="submit"
-              className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-primary-foreground bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+              className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
             >
               Send Message
             </button>
@@ -75,7 +76,21 @@ export default function ContactPage() {
           {/* TODO: Add actual social links and icons */}
           <div className="flex flex-col space-y-3">
             <a
-              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.linkedin.com/in/russelltrzaska/"
+              className="text-foreground/80 hover:text-foreground/90 flex items-center space-x-2"
+            >
+              {/* Placeholder Icon */}
+              <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+              </svg>
+              <span>LinkedIn</span>
+            </a>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://x.com/hellowerld_eth"
               className="text-foreground/80 hover:text-foreground/90 flex items-center space-x-2"
             >
               {/* Placeholder Icon */}
@@ -97,16 +112,6 @@ export default function ContactPage() {
                 />
               </svg>
               <span>GitHub</span>
-            </a>
-            <a
-              href="#"
-              className="text-foreground/80 hover:text-foreground/90 flex items-center space-x-2"
-            >
-              {/* Placeholder Icon */}
-              <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-              </svg>
-              <span>LinkedIn</span>
             </a>
             {/* Add other social links (YouTube, Facebook) here */}
           </div>

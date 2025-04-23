@@ -10,8 +10,12 @@ export default function Footer() {
           </p>
         </div>
         <div className="flex space-x-4">
-          {/* TODO: Add actual social links and icons */}
-          <a href="#" className="text-foreground/60 hover:text-foreground/80">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://x.com/hellowerld_eth"
+            className="text-foreground/60 hover:text-foreground/80"
+          >
             <span className="sr-only">X (Twitter)</span>
             {/* Placeholder Icon */}
             <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -29,7 +33,12 @@ export default function Footer() {
               />
             </svg>
           </a>
-          <a href="#" className="text-foreground/60 hover:text-foreground/80">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.linkedin.com/in/russelltrzaska/"
+            className="text-foreground/60 hover:text-foreground/80"
+          >
             <span className="sr-only">LinkedIn</span>
             {/* Placeholder Icon */}
             <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">

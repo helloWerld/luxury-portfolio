@@ -31,7 +31,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       transition={{ duration: 0.2 }}
       className="border border-secondary/20 rounded-lg overflow-hidden h-full flex flex-col"
     >
-      <Link href={`/projects/${project.slug}`} className="block group h-full">
+      <Link href={`/portfolio/${project.slug}`} className="block group h-full">
         <div className="relative w-full h-48 bg-muted">
           {project.thumbnail_url ? (
             <Image

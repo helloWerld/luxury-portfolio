@@ -1,18 +1,22 @@
 import Link from "next/link";
 
-const navItems = [
+const mainNavItems = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
-  { name: "Projects", href: "/projects" },
-  { name: "Contact", href: "/contact" },
+  { name: "Portfolio", href: "/portfolio" },
+  { name: "Testimonials", href: "/testimonials" },
   { name: "Resume", href: "/resume" },
 ];
 
+// Separate Contact item
+const contactNavItem = { name: "Contact", href: "/contact" };
+
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-secondary/20 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-secondary/20 bg-white">
       <div className="container flex h-14 max-w-screen-2xl items-center mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mr-4 hidden md:flex">
+        {/* Desktop Navigation */}
+        <div className="mr-4 hidden md:flex flex-1 items-center">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             {/* TODO: Add Logo or Name */}
             <span className="font-bold font-serif text-lg">
@@ -20,7 +24,7 @@ export default function Header() {
             </span>
           </Link>
           <nav className="flex items-center gap-6 text-sm">
-            {navItems.map((item) => (
+            {mainNavItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -30,10 +34,19 @@ export default function Header() {
               </Link>
             ))}
           </nav>
+          {/* Contact Link - Pushed to the right */}
+          <div className="ml-auto">
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center px-3 py-2 border border-black font-small rounded-md hover:bg-black hover:text-white text-sm transition-colors ease-in-out duration-300"
+            >
+              Get in Touch
+            </Link>
+          </div>
         </div>
         {/* TODO: Add mobile navigation */}
         <div className="flex flex-1 items-center justify-end space-x-2 md:hidden">
-          <span className="font-bold font-serif text-lg">Logo</span>{" "}
+          <span className="font-bold font-serif text-lg">Russell Trzaska</span>{" "}
           {/* Placeholder */}
           {/* Mobile Menu Button Placeholder */}
           <button className="inline-flex items-center justify-center rounded-md p-2 text-foreground/60 hover:text-foreground/80 focus:outline-none">
