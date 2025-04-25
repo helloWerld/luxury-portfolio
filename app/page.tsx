@@ -6,10 +6,16 @@ import Particles from "@/components/Particles";
 import TypingAnimation from "@/components/TypingAnimation";
 import Waves from "@/components/Waves";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function HomePage() {
   const [background, setBackground] = useState("waves");
+
+  useEffect(() => {
+    setBackground(
+      ["waves", "magnet", "particles"][Math.floor(Math.random() * 3)]
+    );
+  }, []);
   return (
     <div className="flex-grow overflow-clip">
       {/* Hero Section - Full Height Attempt */}
@@ -24,7 +30,7 @@ export default function HomePage() {
             duration={50}
             className="text-4xl sm:text-5xl md:text-6xl font-bold font-serif mb-6 relative text-balance"
           >
-            Architecting Bespoke Web Properties for The World's Elite.
+            Architecting Bespoke Web Properties for Discerning Clients.
           </TypingAnimation>
 
           <TypingAnimation
@@ -35,7 +41,7 @@ export default function HomePage() {
           >
             {/* TODO: Replace with brief description */}
             Full-stack developer specializing in high-performance, luxurious web
-            applications and websites for discerning clients.
+            applications and websites for clients who value excellence.
           </TypingAnimation>
           {/* Call to Action Buttons */}
           <BoxReveal boxColor="black">

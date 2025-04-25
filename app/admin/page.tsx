@@ -90,7 +90,20 @@ export default function AdminPage() {
 
   const handleFormSubmit = async (data: ProjectInput & { id?: number }) => {
     if (editingProject) {
-      await handleUpdateProject(editingProject.id, data);
+      // Only pass fields that have changed
+      const changedFields: Partial<ProjectInput> = {};
+      Object.keys(data).forEach((key) => {
+        const k = key as keyof ProjectInput;
+        if (k === "tech_stack") {
+          // Special handling for tech_stack array
+          if (JSON.stringify(data[k]) !== JSON.stringify(editingProject[k])) {
+            changedFields[k] = data[k];
+          }
+        } else if (data[k] !== editingProject[k]) {
+          changedFields[k] = data[k] ?? undefined;
+        }
+      });
+      await handleUpdateProject(editingProject.id, changedFields);
     } else {
       await handleAddProject(data);
     }

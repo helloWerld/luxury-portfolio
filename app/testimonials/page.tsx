@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import Marquee from "@/components/Marquee";
-import { cn } from "@/lib/utils";
 
 // Expanded and updated dummy data
 const testimonials = [

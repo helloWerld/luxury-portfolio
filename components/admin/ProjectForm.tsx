@@ -24,20 +24,40 @@ export default function ProjectForm({
       description: "",
       thumbnail_url: null,
       body: null,
-      tech_stack: null,
+      tech_stack: [],
       role: null,
       outcomes: null,
+      github_url: "",
+      live_url: "",
     }
   );
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [newTech, setNewTech] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleAddTech = () => {
+    if (newTech.trim()) {
+      setFormData((prev) => ({
+        ...prev,
+        tech_stack: [...(prev.tech_stack || []), newTech.trim()],
+      }));
+      setNewTech("");
+    }
+  };
+
+  const handleRemoveTech = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      tech_stack: prev.tech_stack?.filter((_, i) => i !== index) || [],
+    }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -216,7 +236,7 @@ export default function ProjectForm({
             name="github_url"
             value={formData.github_url || ""}
             onChange={handleChange}
-            placeholder="https://github.com/username/repo"
+            required
             className="w-full p-2 border border-gray-300 rounded shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
@@ -226,7 +246,7 @@ export default function ProjectForm({
             htmlFor="live_url"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
-            Live Preview URL
+            Live URL
           </label>
           <input
             type="url"
@@ -234,7 +254,7 @@ export default function ProjectForm({
             name="live_url"
             value={formData.live_url || ""}
             onChange={handleChange}
-            placeholder="https://your-project.com"
+            required
             className="w-full p-2 border border-gray-300 rounded shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
@@ -274,7 +294,46 @@ export default function ProjectForm({
         />
       </div>
 
-      <div className="flex justify-end space-x-3">
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Tech Stack
+        </label>
+        <div className="flex flex-wrap gap-2 mb-2">
+          {formData.tech_stack?.map((tech, index) => (
+            <span
+              key={index}
+              className="inline-flex items-center px-2 py-1 rounded-full text-sm bg-gray-100"
+            >
+              {tech}
+              <button
+                type="button"
+                onClick={() => handleRemoveTech(index)}
+                className="ml-1 text-gray-500 hover:text-gray-700"
+              >
+                ×
+              </button>
+            </span>
+          ))}
+        </div>
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={newTech}
+            onChange={(e) => setNewTech(e.target.value)}
+            placeholder="Add technology"
+            className="flex-1 p-2 border border-gray-300 rounded shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+          />
+          <button
+            type="button"
+            onClick={handleAddTech}
+            className="px-4 py-2 border border-transparent rounded shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Add
+          </button>
+        </div>
+      </div>
+
+      <div className="flex justify-end space-x-4">
         <button
           type="button"
           onClick={onCancel}

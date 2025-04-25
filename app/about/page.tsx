@@ -1,7 +1,7 @@
 import ScrollFadeIn from "@/components/ScrollFadeIn";
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, User } from "lucide-react";
+import { Mail } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -178,9 +178,9 @@ export default function AboutPage() {
             </p>
             <ul className="list-disc list-inside space-y-1 text-foreground/80">
               <li>
-                Architected and executed the bespoke frontend for BitBasel's
-                innovative Bitcoin Ordinal Marketplace using Next.js and
-                Tailwind CSS.
+                Architected and executed the bespoke frontend for
+                BitBasel&apos;s innovative Bitcoin Ordinal Marketplace using
+                Next.js and Tailwind CSS.
               </li>
               <li>
                 Engineered a responsive, high-performance user experience,
@@ -252,8 +252,8 @@ export default function AboutPage() {
                 media appearances and event coordination.
               </li>
               <li>
-                Engineered the channel's web presence and managed communications
-                for an email list exceeding 15,000 subscribers.
+                Engineered the channel&apos;s web presence and managed
+                communications for an email list exceeding 15,000 subscribers.
               </li>
               <li>
                 Successfully negotiated and secured over $2 million in

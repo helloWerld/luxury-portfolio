@@ -1,25 +1,24 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 
-interface MarqueeProps extends React.HTMLAttributes<HTMLDivElement> {
+interface MarqueeProps {
   className?: string;
-  reverse?: boolean;
-  pauseOnHover?: boolean;
-  children?: React.ReactNode;
   vertical?: boolean;
   repeat?: number;
-  [key: string]: any;
+  pauseOnHover?: boolean;
+  reverse?: boolean;
+  children?: React.ReactNode;
 }
 
 const Marquee = React.forwardRef<HTMLDivElement, MarqueeProps>(
   (
     {
       className,
-      reverse = false,
-      pauseOnHover = false,
-      children,
       vertical = false,
-      repeat = 4, // Defaulting to 4 as seen in some examples, adjust as needed
+      repeat = 4,
+      pauseOnHover = false,
+      reverse = false,
+      children,
       ...props
     },
     ref

@@ -8,9 +8,6 @@ const mainNavItems = [
   { name: "Resume", href: "/resume" },
 ];
 
-// Separate Contact item
-const contactNavItem = { name: "Contact", href: "/contact" };
-
 export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-secondary/20 bg-white">

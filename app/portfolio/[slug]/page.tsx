@@ -53,18 +53,12 @@ export default async function ProjectDetailPage(props: {
   return (
     <article className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
       {/* Project Title */}
-      <h1 className="text-4xl md:text-5xl font-bold font-serif mb-4">
+      <h1 className="text-4xl md:text-5xl font-bold font-serif mb-8">
         {project.title}
       </h1>
-
-      {/* Optional: Project creation date or other meta */}
-      <p className="text-sm text-foreground/60 mb-8">
-        Published: {new Date(project.created_at).toLocaleDateString()}
-      </p>
-
       {/* Project Thumbnail/Hero Image */}
       {project.thumbnail_url && (
-        <div className="relative w-full h-64 md:h-96 mb-8 bg-muted rounded-lg overflow-hidden">
+        <div className="relative w-full h-80 md:h-[500px] mb-8 bg-muted rounded-lg overflow-hidden">
           <Image
             src={project.thumbnail_url}
             alt={`${project.title} main image`}

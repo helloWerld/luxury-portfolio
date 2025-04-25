@@ -1,9 +1,30 @@
 import { useEffect, useRef } from "react";
 import { Renderer, Camera, Geometry, Program, Mesh } from "ogl";
 
+interface ParticlesProps {
+  particleCount?: number;
+  particleSpread?: number;
+  speed?: number;
+  particleColors?: string[];
+  moveParticlesOnHover?: boolean;
+  particleHoverFactor?: number;
+  alphaParticles?: boolean;
+  particleBaseSize?: number;
+  sizeRandomness?: number;
+  cameraDistance?: number;
+  disableRotation?: boolean;
+  className?: string;
+}
+
+// Define type for OGL render parameters
+interface OGLRenderParams {
+  scene: Mesh;
+  camera: Camera;
+}
+
 const defaultColors = ["#ffffff", "#ffffff", "#ffffff"];
 
-const hexToRgb = (hex) => {
+const hexToRgb = (hex: string): [number, number, number] => {
   hex = hex.replace(/^#/, "");
   if (hex.length === 3) {
     hex = hex
@@ -78,21 +99,22 @@ const fragment = /* glsl */ `
 `;
 
 const Particles = ({
-  particleCount = 200,
+  particleCount = 500,
   particleSpread = 10,
-  speed = 0.1,
+  speed = 5,
   particleColors,
-  moveParticlesOnHover = false,
-  particleHoverFactor = 1,
+  moveParticlesOnHover = true,
+  particleHoverFactor = 2,
   alphaParticles = false,
   particleBaseSize = 100,
-  sizeRandomness = 1,
+  sizeRandomness = 6,
   cameraDistance = 20,
   disableRotation = false,
   className,
-}) => {
-  const containerRef = useRef(null);
-  const mouseRef = useRef({ x: 0, y: 0 });
+}: ParticlesProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mouseRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const animationFrameIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -110,12 +132,17 @@ const Particles = ({
       const width = container.clientWidth;
       const height = container.clientHeight;
       renderer.setSize(width, height);
-      camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
+      camera.perspective({
+        aspect: width / height,
+        fov: 15,
+        near: 0.1,
+        far: 100,
+      });
     };
     window.addEventListener("resize", resize, false);
     resize();
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
@@ -175,12 +202,11 @@ const Particles = ({
 
     const particles = new Mesh(gl, { mode: gl.POINTS, geometry, program });
 
-    let animationFrameId;
     let lastTime = performance.now();
     let elapsed = 0;
 
-    const update = (t) => {
-      animationFrameId = requestAnimationFrame(update);
+    const update = (t: number) => {
+      animationFrameIdRef.current = requestAnimationFrame(update);
       const delta = t - lastTime;
       lastTime = t;
       elapsed += delta * speed;
@@ -198,40 +224,47 @@ const Particles = ({
       if (!disableRotation) {
         particles.rotation.x = Math.sin(elapsed * 0.0002) * 0.1;
         particles.rotation.y = Math.cos(elapsed * 0.0005) * 0.15;
-        particles.rotation.z += 0.01 * speed;
       }
 
-      renderer.render({ scene: particles, camera });
+      renderer.render({ scene: particles, camera } as OGLRenderParams);
     };
 
-    animationFrameId = requestAnimationFrame(update);
+    animationFrameIdRef.current = requestAnimationFrame(update);
 
     return () => {
-      window.removeEventListener("resize", resize);
       if (moveParticlesOnHover) {
         container.removeEventListener("mousemove", handleMouseMove);
       }
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", resize);
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+      }
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
       if (container.contains(gl.canvas)) {
         container.removeChild(gl.canvas);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     particleCount,
     particleSpread,
     speed,
-    moveParticlesOnHover,
-    particleHoverFactor,
-    alphaParticles,
     particleBaseSize,
     sizeRandomness,
+    alphaParticles,
     cameraDistance,
     disableRotation,
+    moveParticlesOnHover,
+    particleHoverFactor,
+    particleColors,
   ]);
 
   return (
-    <div ref={containerRef} className={`relative w-full h-full ${className}`} />
+    <div
+      ref={containerRef}
+      className={`relative w-full h-full ${className || ""}`}
+    >
+      {/* Canvas will be appended here */}
+    </div>
   );
 };
 
