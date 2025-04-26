@@ -78,7 +78,7 @@ export default function AboutPage() {
               </div>
             </div>
             <p className="text-foreground/80">
-              A results-driven Frontend Engineer with over five years of
+              A results-driven Full Stack Engineet with over five years of
               dedicated experience, specializing in the architecture and
               development of high-performance, accessible web applications.
               Proven expertise in leveraging sophisticated technologies such as
