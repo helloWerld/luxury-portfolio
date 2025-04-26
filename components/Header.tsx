@@ -5,18 +5,18 @@ const mainNavItems = [
   { name: "About", href: "/about" },
   { name: "Portfolio", href: "/portfolio" },
   { name: "Testimonials", href: "/testimonials" },
-  { name: "Resume", href: "/resume" },
+  { name: "Blog", href: "/blog" },
 ];
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-secondary/20 bg-white">
+    <header className="sticky top-0 z-50 w-full border-b border-secondary/20 bg-black text-white/90">
       <div className="container flex h-14 max-w-screen-2xl items-center mx-auto px-4 sm:px-6 lg:px-8">
         {/* Desktop Navigation */}
         <div className="mr-4 hidden md:flex flex-1 items-center">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             {/* TODO: Add Logo or Name */}
-            <span className="font-bold font-serif text-lg">
+            <span className="font-bold font-serif text-lg text-white">
               Russell Trzaska
             </span>
           </Link>
@@ -32,12 +32,18 @@ export default function Header() {
             ))}
           </nav>
           {/* Contact Link - Pushed to the right */}
-          <div className="ml-auto">
+          <div className="flex flex-row gap-4 items-center ml-auto">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center px-3 py-2 border border-black font-small rounded-md hover:bg-black hover:text-white text-sm transition-colors ease-in-out duration-300"
+              className="inline-flex items-center justify-center px-3 py-2 border-1 border-white font-small rounded-md hover:bg-white hover:text-black text-sm transition-colors ease-in-out duration-300"
             >
               Get in Touch
+            </Link>
+            <Link
+              href="/resume"
+              className="transition-colors hover:text-foreground/80 text-foreground/60"
+            >
+              Resume
             </Link>
           </div>
         </div>

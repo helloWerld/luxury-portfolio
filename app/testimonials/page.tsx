@@ -5,45 +5,45 @@ import Marquee from "@/components/Marquee";
 const testimonials = [
   {
     name: "Alice B.",
-    username: "@alice_ceo", // Using title/role as username placeholder
+    username: "@alice_ceo",
     title: "CEO, TechCorp",
     body: "Working with Russell was transformative. Their expertise significantly boosted our platform.",
-    img: "https://avatar.vercel.sh/alice",
+    img: "https://ui-avatars.com/api/?name=Alice+B&background=random",
   },
   {
     name: "Charles D.",
     username: "@charles_innovate",
     title: "Marketing Director, Innovate Solutions",
     body: "Exceptional skill and professionalism. Delivered a sophisticated site that matched our vision.",
-    img: "https://avatar.vercel.sh/charles",
+    img: "https://ui-avatars.com/api/?name=Charles+D&background=random",
   },
   {
     name: "Eva F.",
     username: "@eva_creative",
     title: "Founder, Creative Hub",
     body: "Outstanding attention to detail. Our new website is beautiful and incredibly fast.",
-    img: "https://avatar.vercel.sh/eva",
+    img: "https://ui-avatars.com/api/?name=Eva+F&background=random",
   },
   {
     name: "George H.",
     username: "@george_pm",
     title: "Product Manager, Global Systems",
     body: "A true frontend expert. Tackled complex challenges with ease and delivered ahead of schedule.",
-    img: "https://avatar.vercel.sh/george",
+    img: "https://ui-avatars.com/api/?name=George+H&background=random",
   },
   {
     name: "Isabelle J.",
     username: "@isabelle_luxe",
     title: "Art Director, Luxe Brands",
     body: "Pleasure to collaborate with. Translated complex designs into a seamless experience.",
-    img: "https://avatar.vercel.sh/isabelle",
+    img: "https://ui-avatars.com/api/?name=Isabelle+J&background=random",
   },
   {
     name: "Kevin L.",
     username: "@kevin_cto",
     title: "CTO, FinTech Start-up",
     body: "Deep technical knowledge and great business understanding. Game-changing improvements.",
-    img: "https://avatar.vercel.sh/kevin",
+    img: "https://ui-avatars.com/api/?name=Kevin+L&background=random",
   },
   // Duplicating for more data (adjust names/details as needed)
   {
@@ -51,42 +51,42 @@ const testimonials = [
     username: "@maria_data",
     title: "Data Scientist, Analytics Inc.",
     body: "The performance optimization work was top-notch and greatly improved our data processing times.",
-    img: "https://avatar.vercel.sh/maria",
+    img: "https://ui-avatars.com/api/?name=Maria+N&background=random",
   },
   {
     name: "Oliver P.",
     username: "@oliver_design",
     title: "Lead Designer, Studio Flow",
     body: "Russell's ability to implement intricate UI details precisely is impressive.",
-    img: "https://avatar.vercel.sh/oliver",
+    img: "https://ui-avatars.com/api/?name=Oliver+P&background=random",
   },
   {
     name: "Quinn R.",
     username: "@quinn_ecom",
     title: "E-commerce Manager, RetailFast",
     body: "Our conversion rates increased significantly after the site overhaul. Fantastic work!",
-    img: "https://avatar.vercel.sh/quinn",
+    img: "https://ui-avatars.com/api/?name=Quinn+R&background=random",
   },
   {
     name: "Sophia T.",
     username: "@sophia_health",
     title: "CEO, HealthWell",
     body: "Delivered a highly accessible and user-friendly platform crucial for our patients.",
-    img: "https://avatar.vercel.sh/sophia",
+    img: "https://ui-avatars.com/api/?name=Sophia+T&background=random",
   },
   {
     name: "Umar V.",
     username: "@umar_media",
     title: "Content Strategist, Media Group",
     body: "Collaborative, efficient, and technically brilliant. Made the project a success.",
-    img: "https://avatar.vercel.sh/umar",
+    img: "https://ui-avatars.com/api/?name=Umar+V&background=random",
   },
   {
     name: "Willow X.",
     username: "@willow_edu",
     title: "Director, EduTech Platform",
     body: "The platform is scalable and robust, perfectly meeting our growing user base needs.",
-    img: "https://avatar.vercel.sh/willow",
+    img: "https://ui-avatars.com/api/?name=Willow+X&background=random",
   },
 ];
 
@@ -139,7 +139,7 @@ export default function TestimonialsPage() {
         Client Testimonials
       </h1>
       {/* Updated Layout based on Marquee3D example */}
-      <div className="relative flex w-full flex-row items-center justify-center gap-4 overflow-hidden rounded-lg bg-background [perspective:500px]">
+      <div className="relative flex w-full flex-row items-center justify-center gap-4 overflow-hidden rounded-lg bg-background [perspective:800px]">
         <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white z-[300]"></div>
         <div
           className="flex flex-row items-center gap-4 h-screen"

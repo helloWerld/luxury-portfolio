@@ -10,11 +10,11 @@ export default function AboutPage() {
         <h1 className="text-4xl font-bold font-serif mb-8">About Russell</h1>
       </ScrollFadeIn>
 
-      <ScrollFadeIn className="mb-12" delay={0.1}>
+      <ScrollFadeIn className="mb-8" delay={0.1}>
         <section className="flex flex-col md:flex-row md:items-start gap-8">
           <div className="flex-shrink-0 mx-auto md:mx-0">
             {/* Headshot */}
-            <div className="relative mb-4 w-40 h-40 rounded-full overflow-hidden border-1 grayscale hover:grayscale-0">
+            <div className="relative mb-4 w-40 h-40 rounded-full overflow-hidden border-1">
               <Image
                 src="/russell.png"
                 alt="Headshot of Russell Trzaska"
@@ -34,7 +34,7 @@ export default function AboutPage() {
               <div className="flex justify-center md:justify-start space-x-4">
                 {/* Remember to replace # with actual LinkedIn URL */}
                 <Link
-                  href="#"
+                  href="https://www.linkedin.com/in/russelltrzaska/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
@@ -52,7 +52,7 @@ export default function AboutPage() {
                 </Link>
                 {/* Remember to replace # with actual GitHub URL */}
                 <Link
-                  href="#"
+                  href="https://github.com/helloWerld"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub"
@@ -94,7 +94,7 @@ export default function AboutPage() {
 
       <ScrollFadeIn className="mb-12" delay={0.2}>
         <section>
-          <h2 className="text-2xl font-semibold font-serif mb-4">
+          <h2 className="text-2xl font-semibold font-serif mb-4 border-t pt-4">
             Technical Expertise
           </h2>
           {/* Updated Skills */}
@@ -146,7 +146,7 @@ export default function AboutPage() {
 
       <ScrollFadeIn className="mb-12" delay={0.3}>
         <section>
-          <h2 className="text-2xl font-semibold font-serif mb-4">
+          <h2 className="text-2xl font-semibold font-serif mb-4 border-t pt-4">
             Professional Experience
           </h2>
           {/* Updated Work Experience */}
@@ -361,7 +361,7 @@ export default function AboutPage() {
 
       <ScrollFadeIn delay={0.5}>
         <section>
-          <h2 className="text-2xl font-semibold font-serif mb-4">
+          <h2 className="text-2xl font-semibold font-serif mb-4 border-t pt-4">
             Education & Community Engagement
           </h2>
           {/* Updated Education and Community */}

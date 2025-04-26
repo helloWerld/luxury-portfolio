@@ -9,6 +9,7 @@ import {
   deleteProject,
   type ProjectDetails,
   type ProjectInput,
+  updateProjectOrder,
 } from "@/lib/data";
 
 export default function AdminPage() {
@@ -20,6 +21,31 @@ export default function AdminPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const moveProject = async (index: number, direction: "up" | "down") => {
+    if (
+      (direction === "up" && index === 0) ||
+      (direction === "down" && index === projects.length - 1)
+    )
+      return;
+
+    const newIndex = direction === "up" ? index - 1 : index + 1;
+    const newProjects = [...projects];
+    [newProjects[index], newProjects[newIndex]] = [
+      newProjects[newIndex],
+      newProjects[index],
+    ];
+    setProjects(newProjects);
+
+    try {
+      await updateProjectOrder(newProjects);
+      console.log("Project order updated successfully");
+    } catch (err) {
+      console.error("Failed to update project order:", err);
+      // Revert the order if the update fails
+      setProjects(projects);
+    }
+  };
+
   // Fetch projects on component mount
   useEffect(() => {
     loadProjects();
@@ -28,7 +54,11 @@ export default function AdminPage() {
   async function loadProjects() {
     try {
       const data = await fetchProjectsForAdmin();
-      setProjects(data);
+      // Sort projects by order
+      const sortedProjects = [...data].sort(
+        (a, b) => (a.order ?? 0) - (b.order ?? 0)
+      );
+      setProjects(sortedProjects);
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load projects");
@@ -91,19 +121,22 @@ export default function AdminPage() {
   const handleFormSubmit = async (data: ProjectInput & { id?: number }) => {
     if (editingProject) {
       // Only pass fields that have changed
-      const changedFields: Partial<ProjectInput> = {};
+      const changedFields: Record<string, string | number | string[] | null> =
+        {};
       Object.keys(data).forEach((key) => {
         const k = key as keyof ProjectInput;
         if (k === "tech_stack") {
-          // Special handling for tech_stack array
           if (JSON.stringify(data[k]) !== JSON.stringify(editingProject[k])) {
             changedFields[k] = data[k];
           }
         } else if (data[k] !== editingProject[k]) {
-          changedFields[k] = data[k] ?? undefined;
+          changedFields[k] = data[k];
         }
       });
-      await handleUpdateProject(editingProject.id, changedFields);
+      await handleUpdateProject(
+        editingProject.id,
+        changedFields as Partial<ProjectInput>
+      );
     } else {
       await handleAddProject(data);
     }
@@ -165,14 +198,34 @@ export default function AdminPage() {
           <p className="text-gray-500">No projects found.</p>
         ) : (
           <ul className="space-y-3">
-            {projects.map((project) => (
+            {projects.map((project, index) => (
               <li
                 key={project.id}
                 className="flex justify-between items-center p-4 border rounded shadow-sm bg-white"
               >
-                <div>
-                  <h3 className="text-lg font-medium">{project.title}</h3>
-                  <p className="text-sm text-gray-600">{project.description}</p>
+                <div className="flex items-center gap-4">
+                  <div className="flex flex-col">
+                    <button
+                      onClick={() => moveProject(index, "up")}
+                      disabled={index === 0}
+                      className="p-1 text-gray-500 hover:text-gray-700 disabled:opacity-50"
+                    >
+                      ↑
+                    </button>
+                    <button
+                      onClick={() => moveProject(index, "down")}
+                      disabled={index === projects.length - 1}
+                      className="p-1 text-gray-500 hover:text-gray-700 disabled:opacity-50"
+                    >
+                      ↓
+                    </button>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-medium">{project.title}</h3>
+                    <p className="text-sm text-gray-600">
+                      {project.description}
+                    </p>
+                  </div>
                 </div>
                 <div className="space-x-2 flex-shrink-0">
                   <button

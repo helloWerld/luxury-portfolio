@@ -29,6 +29,7 @@ export default function ProjectForm({
       outcomes: null,
       github_url: "",
       live_url: "",
+      order: 0,
     }
   );
   const [isUploading, setIsUploading] = useState(false);

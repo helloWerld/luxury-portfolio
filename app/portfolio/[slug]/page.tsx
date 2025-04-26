@@ -58,12 +58,12 @@ export default async function ProjectDetailPage(props: {
       </h1>
       {/* Project Thumbnail/Hero Image */}
       {project.thumbnail_url && (
-        <div className="relative w-full h-80 md:h-[500px] mb-8 bg-muted rounded-lg overflow-hidden">
+        <div className="relative w-full h-80 md:h-[500px] mb-8 bg-muted rounded-lg overflow-hidden border-1">
           <Image
             src={project.thumbnail_url}
             alt={`${project.title} main image`}
             fill
-            style={{ objectFit: "cover" }}
+            className="object-cover object-top"
             priority // Prioritize loading hero image
           />
         </div>
@@ -71,10 +71,10 @@ export default async function ProjectDetailPage(props: {
 
       {/* Main Content Area */}
       <div className="prose prose-lg dark:prose-invert max-w-none mx-auto">
-        {/* TODO: Render the project body content. 
-            If 'body' is markdown, use a markdown renderer library. 
-            If it's plain text, wrap in paragraphs or use dangerouslySetInnerHTML carefully if it contains HTML. 
-            For now, just displaying as text. */}
+        <p className="text-xl font-serif mb-4 font-semibold">
+          {project.description}
+        </p>
+
         <p>{project.body || "No content available."}</p>
       </div>
 

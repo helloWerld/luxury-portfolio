@@ -29,8 +29,19 @@ export default function ProjectsPage() {
       try {
         setIsLoading(true);
         const fetchedProjects = await fetchProjects();
-        setProjects(fetchedProjects);
-        setError(null); // Clear any previous errors
+        console.log("Fetched projects before sorting:", fetchedProjects);
+
+        // Sort projects by order
+        const sortedProjects = [...fetchedProjects].sort((a, b) => {
+          console.log(
+            `Comparing ${a.title} (order: ${a.order}) with ${b.title} (order: ${b.order})`
+          );
+          return (a.order ?? 0) - (b.order ?? 0);
+        });
+
+        console.log("Projects after sorting:", sortedProjects);
+        setProjects(sortedProjects);
+        setError(null);
       } catch (err) {
         console.error("Failed to load projects:", err);
         setError(

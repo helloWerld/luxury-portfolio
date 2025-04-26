@@ -8,6 +8,7 @@ export type ProjectGridItem = {
   slug: string;
   thumbnail_url: string | null;
   description: string | null;
+  order: number;
 };
 
 // Define a type for the full project details
@@ -25,6 +26,7 @@ export type ProjectDetails = {
   outcomes: string | null;
   github_url: string | null;
   live_url: string | null;
+  order: number;
 };
 
 // Type for creating/updating projects
@@ -35,21 +37,29 @@ export type ProjectInput = Omit<ProjectDetails, "id" | "created_at">;
  * Selects only the necessary fields for performance.
  */
 export async function fetchProjects(): Promise<ProjectGridItem[]> {
-  console.log("Fetching projects for grid...");
-  const { data, error } = await supabase
-    .from("projects")
-    .select("id, title, slug, thumbnail_url, description") // Select specific columns
-    .order("created_at", { ascending: false }); // Order by creation date, newest first
+  try {
+    console.log("Fetching projects for grid...");
+    const { data, error } = await supabase
+      .from("projects")
+      .select("id, title, slug, thumbnail_url, description, order")
+      .order("order", { ascending: true });
 
-  if (error) {
-    console.error("Error fetching projects:", error);
-    // In a real app, you might want to throw the error or return a specific error state
-    throw new Error(`Failed to fetch projects: ${error.message}`);
+    if (error) {
+      console.error("Error fetching projects:", error);
+      throw new Error(`Failed to fetch projects: ${error.message}`);
+    }
+
+    if (!data) {
+      console.log("No projects found");
+      return [];
+    }
+
+    console.log("Raw project data:", data);
+    return data;
+  } catch (err) {
+    console.error("Unexpected error fetching projects:", err);
+    throw new Error("Failed to fetch projects. Please try again later.");
   }
-
-  console.log(`Fetched ${data?.length || 0} projects.`);
-  // Ensure data is not null, default to empty array if it is
-  return data || [];
 }
 
 // TODO: Add fetchProjectBySlug function later
@@ -169,7 +179,7 @@ export async function fetchProjectsForAdmin(): Promise<ProjectDetails[]> {
   const { data, error } = await supabase
     .from("projects")
     .select("*")
-    .order("created_at", { ascending: false });
+    .order("order", { ascending: true });
 
   if (error) {
     console.error("Error fetching projects for admin:", error);
@@ -245,4 +255,54 @@ export async function deleteProjectImage(url: string): Promise<void> {
   }
 
   console.log("Image deleted successfully");
+}
+
+export async function updateProjectOrder(
+  projects: ProjectDetails[]
+): Promise<void> {
+  try {
+    // First check if order column exists
+    const { error: checkError } = await supabase
+      .from("projects")
+      .select("id")
+      .limit(1);
+
+    if (checkError) {
+      console.error("Error checking projects table:", checkError);
+      return;
+    }
+
+    // Update each project individually with a delay to prevent rate limiting
+    for (let i = 0; i < projects.length; i++) {
+      const { error } = await supabase
+        .from("projects")
+        .update({ order: i })
+        .eq("id", projects[i].id);
+
+      if (error) {
+        if (
+          error.message?.includes("column") &&
+          error.message?.includes("does not exist")
+        ) {
+          console.error(
+            'Order column not found. Please run the following SQL in your Supabase SQL editor:\n\nALTER TABLE projects ADD COLUMN "order" INTEGER;'
+          );
+          return;
+        }
+        console.error(
+          `Error updating order for project ${projects[i].id}:`,
+          error
+        );
+        continue;
+      }
+
+      // Add a small delay between updates
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+
+    console.log("Project order updated successfully");
+  } catch (err) {
+    console.error("Error updating project order:", err);
+    throw new Error("Failed to update project order. Please try again later.");
+  }
 }

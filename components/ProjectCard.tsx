@@ -29,18 +29,18 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
       }}
       transition={{ duration: 0.2 }}
-      className="border border-secondary/20 rounded-lg overflow-hidden h-full flex flex-col"
+      className="border border-secondary/20 rounded-lg overflow-hidden h-full flex flex-col group"
     >
       <Link href={`/portfolio/${project.slug}`} className="block group h-full">
-        <div className="relative w-full h-48 bg-muted">
+        <div className="relative w-full h-48 overflow-hidden">
           {project.thumbnail_url ? (
             <Image
               src={project.thumbnail_url}
               alt={`${project.title} thumbnail`}
               fill // Use fill for responsive images within relative parent
-              style={{ objectFit: "cover" }} // Cover the area
+              // Cover the area
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="transition-transform duration-300 group-hover:scale-105"
+              className="self-start transition-transform duration-300 group-hover:scale-105 grayscale group-hover:grayscale-0 object-cover object-top"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-foreground/50">
@@ -48,7 +48,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </div>
           )}
         </div>
-        <div className="p-4 flex-grow flex flex-col">
+        <div className="p-4 flex-grow flex flex-col border-t-1 border-black/50">
           <h2 className="text-xl font-semibold font-serif mb-2 group-hover:text-primary transition-colors duration-200">
             {project.title}
           </h2>
