@@ -36,11 +36,8 @@ export async function generateMetadata({
 // Restore original async function definition
 export default async function ProjectDetailPage(props: {
   params: ParamsPromise;
-  searchParams: SearchParamsPromise;
 }) {
   const params = await props.params; // Await the promise
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _searchParams = await props.searchParams; // Await even if unused for consistency
 
   const { slug } = params;
   const project = await fetchProjectBySlug(slug);
@@ -58,7 +55,7 @@ export default async function ProjectDetailPage(props: {
       </h1>
       {/* Project Thumbnail/Hero Image */}
       {project.thumbnail_url && (
-        <div className="relative w-full h-80 md:h-[500px] mb-8 bg-muted rounded-lg overflow-hidden border-1">
+        <div className="relative w-full h-80 md:h-[500px] mb-8 rounded-lg overflow-hidden border-1">
           <Image
             src={project.thumbnail_url}
             alt={`${project.title} main image`}

@@ -32,7 +32,6 @@ export default function AboutPage() {
               </h2>
               {/* Contact Links */}
               <div className="flex justify-center md:justify-start space-x-4">
-                {/* Remember to replace # with actual LinkedIn URL */}
                 <Link
                   href="https://www.linkedin.com/in/russelltrzaska/"
                   target="_blank"

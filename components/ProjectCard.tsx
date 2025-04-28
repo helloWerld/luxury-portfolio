@@ -37,8 +37,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             <Image
               src={project.thumbnail_url}
               alt={`${project.title} thumbnail`}
-              fill // Use fill for responsive images within relative parent
-              // Cover the area
+              fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="self-start transition-transform duration-300 group-hover:scale-105 grayscale group-hover:grayscale-0 object-cover object-top"
             />
