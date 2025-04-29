@@ -77,7 +77,7 @@ export default function AboutPage() {
               </div>
             </div>
             <p className="text-foreground/80">
-              A results-driven Full Stack Engineet with over five years of
+              A results-driven Full Stack Engineer with over five years of
               dedicated experience, specializing in the architecture and
               development of high-performance, accessible web applications.
               Proven expertise in leveraging sophisticated technologies such as
@@ -173,7 +173,7 @@ export default function AboutPage() {
               Frontend Developer - BitBasel
             </h3>
             <p className="text-sm text-foreground/60 mb-2">
-              February 2024 – Present
+              February 2024 – November 2025
             </p>
             <ul className="list-disc list-inside space-y-1 text-foreground/80">
               <li>

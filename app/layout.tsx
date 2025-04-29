@@ -19,7 +19,8 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: "Russell Trzaska - Full Stack Web Developer",
-  description: "Architecting Bespoke Web Properties for Discerning Clients.",
+  description:
+    "Architecting Bespoke Web Properties for Discerning Clients. Full-stack developer specializing in high-performance, luxurious web applications and websites for clients who value excellence.",
 };
 
 export default function RootLayout({

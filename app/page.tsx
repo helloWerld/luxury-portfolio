@@ -52,10 +52,10 @@ export default function HomePage() {
               View Projects
             </Link>
             <Link
-              href="/testimonials"
+              href="/contact"
               className="inline-flex items-center justify-center px-6 py-3 border border-secondary text-base font-medium rounded-md shadow-sm text-foreground bg-transparent hover:bg-secondary/10 ms-4"
             >
-              Testimonials
+              Get in Touch
             </Link>
           </BoxReveal>
           <div className="md:absolute bottom-12 right-12 flex flex-row mx-auto  gap-2 mt-6">
