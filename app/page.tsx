@@ -28,7 +28,7 @@ export default function HomePage() {
           <TypingAnimation
             as="h1"
             duration={50}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold font-serif mb-6 relative text-balance"
+            className="text-2xl sm:text-3xl md:text-5xl font-bold font-serif mb-6 relative text-balance"
           >
             Architecting Bespoke Web Properties for Discerning Clients.
           </TypingAnimation>
