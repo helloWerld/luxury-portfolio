@@ -170,7 +170,7 @@ export default function AboutPage() {
           </div>
           <div className="mb-6">
             <h3 className="text-lg font-semibold">
-              Frontend Developer - BitBasel (Freelance)
+              Frontend Developer - BitBasel
             </h3>
             <p className="text-sm text-foreground/60 mb-2">
               February 2024 – Present
@@ -288,7 +288,7 @@ export default function AboutPage() {
           <div className="mb-6">
             <h3 className="text-lg font-semibold">
               Enterprise Success Manager / Email Deliverability Expert -
-              ZeroBounce.net
+              ZeroBounce
             </h3>
             <p className="text-sm text-foreground/60 mb-2">
               January 2019 – November 2019

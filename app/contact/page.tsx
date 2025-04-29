@@ -1,4 +1,17 @@
+"use client";
+
+import { useActionState } from "react";
+import { submitContactForm } from "../actions";
+import { FormState } from "../actions";
+
 export default function ContactPage() {
+  const initialState: FormState = {
+    status: "idle",
+    message: null,
+  };
+
+  const [state, formAction] = useActionState(submitContactForm, initialState);
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
       <h1 className="text-4xl font-bold font-serif mb-8">Contact</h1>
@@ -14,7 +27,7 @@ export default function ContactPage() {
             the form or reach out via social media.
           </p>
           {/* TODO: Replace with actual ContactForm component later */}
-          <form className="space-y-4">
+          <form action={formAction} className="space-y-4">
             <div>
               <label
                 htmlFor="name"
@@ -29,6 +42,11 @@ export default function ContactPage() {
                 required
                 className="w-full px-3 py-2 border border-secondary/30 rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50"
               />
+              {state.errors?.name && (
+                <p className="mt-1 text-sm text-red-500">
+                  {state.errors.name[0]}
+                </p>
+              )}
             </div>
             <div>
               <label
@@ -44,6 +62,11 @@ export default function ContactPage() {
                 required
                 className="w-full px-3 py-2 border border-secondary/30 rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50"
               />
+              {state.errors?.email && (
+                <p className="mt-1 text-sm text-red-500">
+                  {state.errors.email[0]}
+                </p>
+              )}
             </div>
             <div>
               <label
@@ -59,13 +82,27 @@ export default function ContactPage() {
                 required
                 className="w-full px-3 py-2 border border-secondary/30 rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50"
               ></textarea>
+              {state.errors?.message && (
+                <p className="mt-1 text-sm text-red-500">
+                  {state.errors.message[0]}
+                </p>
+              )}
             </div>
-            {/* Submit Button */}
+            {state.message && (
+              <p
+                className={`text-sm ${
+                  state.status === "success" ? "text-green-500" : "text-red-500"
+                }`}
+              >
+                {state.message}
+              </p>
+            )}
             <button
               type="submit"
-              className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+              disabled={state.status === "success"}
+              className="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Send Message
+              {state.status === "success" ? "Message Sent" : "Send Message"}
             </button>
           </form>
         </section>
@@ -100,7 +137,9 @@ export default function ContactPage() {
               <span>X (Twitter)</span>
             </a>
             <a
-              href="#"
+              href="https://github.com/helloWerld"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-foreground/80 hover:text-foreground/90 flex items-center space-x-2"
             >
               {/* Placeholder Icon */}

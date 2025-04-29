@@ -9,8 +9,9 @@ export default function ResumePage() {
           experience.
         </p>
         <a
-          href="#" // Replace with actual path to resume PDF (e.g., /resume.pdf)
-          download="YourName_Resume.pdf" // Optional: Suggest filename for download
+          href="/Russell_Trzaska.pdf"
+          download="Russell_Trzaska_Resume.pdf"
+          type="application/pdf"
           className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
         >
           Download Resume (PDF)
